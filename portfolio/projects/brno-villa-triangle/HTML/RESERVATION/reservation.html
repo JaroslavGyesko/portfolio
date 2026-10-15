@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link type="text/css" rel="stylesheet" href="../../CSS/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+    <meta name="author" content="Jaroslav Gyesko">
+    <meta name="keywords" content="Trojúhelnik, vily, Tugendhat, Arnold, Low-Beer">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,500;1,100;1,500;1,700&display=swap" rel="stylesheet">
+    <title>
+      Brno Villa Triangle
+    </title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../../JS/script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header> 
+        <nav>
+          <ul>
+            <li class="nav_buttons" id="logo_button">
+              <a id="logo" href="../HOMEPAGE/index_en.html" accesskey="H"><img src="../../IMAGES/logo_biele2.png" alt="Triangle' Logo"><p>Brno Villa Triangle</p></a>
+            </li>
+            <li class="nav_buttons" id="project_button">
+              <a href="../ABOUT_PROJECT/about_project.html" accesskey="P">About project</a>
+            </li>
+            <li class="nav_buttons" id="reservation_button">
+              <a href="reservation.html" accesskey="R">Reservation</a>
+            </li>
+            <li class="nav_buttons" id="map_button">
+              <a href="../MAP/map_en.html" accesskey="M">Map</a>
+            </li>
+            <li class="nav_buttons" id="contacts_button">
+              <a href="../CONTACTS/contacts.html" accesskey="C">Contacts</a>
+            </li>
+            <li id="socials_button">
+              <a href="#"><img src="../../IMAGES/fb.png" alt="Triangle' Facebook account" title="Triangle' Facebook" width="30"></a> 
+              <a href="#"><img src="../../IMAGES/ig.png" alt="Triangle' Instagram account" title="Triangle' Instagram" width="30"></a> 
+              <a href="javascript:void(0);" onclick="toggleSearch()"><img src="../../IMAGES/lupa_biela.png" alt="Search" title="Search" width="30"></a> 
+            </li>
+            <li class="menu-button">
+                <img src="../../IMAGES/menu_biele.png" alt="Menu Button" onclick="toggleSidebar()">
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <div id="search-container">
+        <form onsubmit="submitSearchForm(event)">
+          <input type="text" id="search-input" placeholder="Search...">
+          <img src="../../IMAGES/lupa_cierna.png" alt="Search" onclick="submitSearchForm(event)">
+        </form>
+      </div>
+      <div class="sidebar">
+        <div class="sidebar-content">
+          <li class="menu-button">
+            <img src="../../IMAGES/menu_biele.png" alt="Menu Button" onclick="toggleSidebar()">
+        </li>
+        <a href="../ABOUT_PROJECT/about_project.html" class="sidebar-button">About project</a>
+        <a href="reservation.html" class="sidebar-button">Reservation</a>
+        <a href="../MAP/map_en.html" class="sidebar-button">Map</a>
+        <a href="../CONTACTS/contacts.html" class="sidebar-button">Contacts</a>
+          <div id="socials_button" class="sidebar-social">
+            <a href="#"><img src="../../IMAGES/fb.png" alt="Triangle' Facebook account" title="Triangle' Facebook" width="30"></a> 
+            <a href="#"><img src="../../IMAGES/ig.png" alt="Triangle' Instagram account" title="Triangle' Instagram" width="30"></a> 
+            <a href="javascript:void(0);" onclick="toggleSearch_sidebar()"><img src="../../IMAGES/lupa_biela.png" alt="Search" title="Search" width="30"></a> 
+          </div>
+          <div id="search-container">
+            <form onsubmit="submitSearchForm(event)">
+              <input type="text" id="search-input" placeholder="Search...">
+              <img src="../../IMAGES/lupa_cierna.png" alt="Search" onclick="submitSearchForm(event)">
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="container2">
+        <div id="cookie-modal-container">
+          <div id="cookie-modal">
+            <button class="close-button" onclick="closeCookieModal()">X</button>
+            <h2>Cookie preferences</h2>
+            <p>We and our partners store and access non-sensitive data from your device (such as cookies or a unique device identifier).<br>
+              In addition, we also process personal data, such as IP addresses and cookie identifiers, in order to process data, for example, to display personalized advertisements, measure the preferences of our visitors, etc.<br>
+              You can change your preferences at any time in our privacy policy on this website. You can give your consent to the use of cookies for all purposes by clicking on "I agree", you can give consent to the use of cookies for individual purposes in the settings by clicking on "Cookie settings". <br>
+              If you do not agree to the use of cookies, click "I do not agree".</p>
+            <br>
+            <br></p>
+            <button id="accept" class="suhlasim" onclick="saveCookiePreferences(true)">I agree</button>
+            <button id="decline" class="nesuhlasim" onclick="saveCookiePreferences(false)">I do not agree</button>
+          </div>
+        </div>
+        <div id="text_project" style="justify-content: center">
+          <h2 id="res_txt">
+            Book a tour through the BrnoID portal.
+          </h2>
+          <a id="res_button" href= "https://www.brnoid.cz/en/tickets-tugendhat">Tickets</a>
+          </div>
+          <div class="scroll-to-top" onclick="scrollToTop()">
+            &#8593;
+        </div>
+          <footer>
+            <div class="lang">
+                <a href="rezervace.html"><img src="../../IMAGES/cz_flag.png" alt="Česky" title="Česky" width="40"></a>
+                <a href="reservierung.html"><img src="../../IMAGES/gm_flag.png" alt="Deutsch" title="Deutsch" width="40"></a>
+                <a href="reservation_he.html"><img src="../../IMAGES/is_flag.png" alt="עברית" title="עברית" width="40"></a>
+            </div>
+            <p>Created by Jaroslav Gyesko. <span>&#169;</span> 2024 <span>&#124;</span> <a href="mailto:554226@muni.cz">Contact</a> <span>&#124;</span> <a href="../ACCESSIBILITY_STATEMENT/accesibility.html">Accessibility statement</a></p>
+            <p><button id="dark_button" onclick="darkSwitch()">Toggle dark mode</button></p>
+        </footer>
+  </div>
+  </div>
+</body>
+</html>

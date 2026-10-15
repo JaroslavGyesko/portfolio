@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" role="img" aria-label="Geoportál KSK">
+  <rect width="240" height="60" rx="8" fill="#fff" fill-opacity=".98"/>
+  <path d="M30 10c-10 0-18 8-18 18 0 13 18 25 18 25s18-12 18-25c0-10-8-18-18-18Zm0 25a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z" fill="#2d9745"/>
+  <text x="60" y="27" font-family="Arial,sans-serif" font-weight="700" font-size="19" fill="#234f32">GEOportál</text>
+  <text x="60" y="45" font-family="Arial,sans-serif" font-weight="700" font-size="14" fill="#2d9745" letter-spacing="2">KSK</text>
+</svg>

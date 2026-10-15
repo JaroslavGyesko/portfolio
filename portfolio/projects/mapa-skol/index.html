@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div class="container">
+            <div id="main-navigation">
+              <div class="logo" onclick="location.href='https://www.geoportalksk.sk/home/';"><img src="img/geoportal-ksk.svg" alt="Geoportál KSK"></div>
+              <div class="nav-title"><h1>Žiaci a učitelia v KSK</h1></div>
+              <div class="nav-icons">
+                <div class="app-icon"><a href="https://www.geoportalksk.sk/home/aplikacie/">Aplikácie</a></div>
+                <div class="kat-icon"><a href="https://www.geoportalksk.sk/geonetwork/srv/eng/catalog.search#/home">Dátový katalóg</a></div>
+              </div>
+            </div>
+            <div id="mySidepanel" class="sidepanel">
+              <span style="cursor:pointer" href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;
+              </span>
+              <h1>Informácie o tematickej mape</h1>
+              <h4><b>Mapa žiakov a učiteľov 2010, 2020</b></h4>
+              <p>V tejto mape budete môcť nájsť údaje o žiakoch a učiteľoch v Košickom samosprávnom kraji za roky 2010 a 2020. <br><br>
+                Ide o absolútny počet žiakov v rámci jednotlivých obcí KSK a taktiež pomer učiteľov voči žiakom (x žiakov na 1 učiteľa)
+            </p>
+            <h4>Zdroje údajov:</h4>
+            <a href="http://datacube.statistics.sk/#!/view/sk/VBD_SK_WIN/sv5002rr/v_sv5002rr_00_00_00_sk" target="_blank">Databáza žiakov a učiteľov 2010</a>
+            <a href="http://datacube.statistics.sk/#!/view/sk/VBD_SK_WIN/sv5002rr/v_sv5002rr_00_00_00_sk" target="_blank">Databáza žiakov a učiteľov 2020 </a>
+            </div>
+
+              <button class="openbtn" onclick="openNav()"><img src="https://www.geoportalksk.sk/web/marginalizovane-romske-komunity/images/info.svg"></button>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-tilelayer-wmts.js"></script>
+        <script src="data/hranica_obce_2.js"></script>
+        <script src="data/hranica_okresy_3.js"></script>
+        <script src="data/obce_pomer2020_4.js"></script>
+        <script src="data/obce_pomer2010_5.js"></script>
+        <script src="data/ziaci2020_point_6.js"></script>
+        <script src="data/ziaci2010_point_7.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        map.createPane('pane_ESRIWorldImagery_0');
+        map.getPane('pane_ESRIWorldImagery_0').style.zIndex = 400;
+        var layer_ESRIWorldImagery_0 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            pane: 'pane_ESRIWorldImagery_0',
+            opacity: 1.0,
+            attribution: 'Tiles © <a href="https://www.esri.com/">Esri</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        map.addLayer(layer_ESRIWorldImagery_0);
+        map.createPane('pane_ZBGISOrtofotomozaikaWMTSSJTSK_1');
+        map.getPane('pane_ZBGISOrtofotomozaikaWMTSSJTSK_1').style.zIndex = 401;
+        var layer_ZBGISOrtofotomozaikaWMTSSJTSK_1 = L.tileLayer.wmts('https://zbgisws.skgeodesy.sk/zbgis_ortofoto_wmts/service.svc/ge', {
+            pane: 'pane_ZBGISOrtofotomozaikaWMTSSJTSK_1',
+            layer: 'WMS_zbgis_ortofoto_wmts',
+            tilematrixSet: 'default028mm',
+            format: 'image/jpgpng',
+            style: 'default',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            opacity: 1.0,
+            attribution: '',
+        });
+        function pop_hranica_obce_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+            });
+            
+        }
+
+        function style_hranica_obce_2_0() {
+            return {
+                pane: 'pane_hranica_obce_2',
+                opacity: 1,
+                color: 'rgba(159,157,157,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(125,139,143,0.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_hranica_obce_2');
+        map.getPane('pane_hranica_obce_2').style.zIndex = 402;
+        map.getPane('pane_hranica_obce_2').style['mix-blend-mode'] = 'normal';
+        var layer_hranica_obce_2 = new L.geoJson(json_hranica_obce_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_hranica_obce_2',
+            layerName: 'layer_hranica_obce_2',
+            pane: 'pane_hranica_obce_2',
+            onEachFeature: pop_hranica_obce_2,
+            style: style_hranica_obce_2_0,
+        });
+        bounds_group.addLayer(layer_hranica_obce_2);
+        map.addLayer(layer_hranica_obce_2);
+        function pop_hranica_okresy_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+            });
+        }
+
+        function style_hranica_okresy_3_0() {
+            return {
+                pane: 'pane_hranica_okresy_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(5,118,5,0.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_hranica_okresy_3');
+        map.getPane('pane_hranica_okresy_3').style.zIndex = 403;
+        map.getPane('pane_hranica_okresy_3').style['mix-blend-mode'] = 'normal';
+        var layer_hranica_okresy_3 = new L.geoJson(json_hranica_okresy_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_hranica_okresy_3',
+            layerName: 'layer_hranica_okresy_3',
+            pane: 'pane_hranica_okresy_3',
+            onEachFeature: pop_hranica_okresy_3,
+            style: style_hranica_okresy_3_0,
+        });
+        bounds_group.addLayer(layer_hranica_okresy_3);
+        map.addLayer(layer_hranica_okresy_3);
+        function pop_obce_pomer2020_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Obec</strong><br />' + (feature.properties['NM4'] !== null ? autolinker.link(feature.properties['NM4'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Počet žiakov (2020)</strong><br />' + (feature.properties['ziaci2020'] !== null ? autolinker.link(feature.properties['ziaci2020'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Počet učiteľov (2020)</strong><br />' + (feature.properties['uc2020'] !== null ? autolinker.link(feature.properties['uc2020'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Počet žiakov na 1 učiteľa (2020)</strong><br />' + (feature.properties['pomer2020'] !== null ? autolinker.link(feature.properties['pomer2020'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+        function style_obce_pomer2020_4_0(feature) {
+            var context = {
+                feature: feature,
+                variables: {}
+            };
+            // Start of if blocks and style check logic
+            if (exp_obce_pomer2020_4rule0_eval_expression(context)) {
+                  return {
+                pane: 'pane_obce_pomer2020_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_obce_pomer2020_4rule1_eval_expression(context)) {
+                  return {
+                pane: 'pane_obce_pomer2020_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,191,191,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_obce_pomer2020_4rule2_eval_expression(context)) {
+                  return {
+                pane: 'pane_obce_pomer2020_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,128,128,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_obce_pomer2020_4rule3_eval_expression(context)) {
+                  return {
+                pane: 'pane_obce_pomer2020_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,64,64,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_obce_pomer2020_4rule4_eval_expression(context)) {
+                  return {
+                pane: 'pane_obce_pomer2020_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,0,0,1.0)',
+                interactive: true,
+            };
+                }
+            else {
+                return {fill: false, stroke: false};
+            }
+        }
+        map.createPane('pane_obce_pomer2020_4');
+        map.getPane('pane_obce_pomer2020_4').style.zIndex = 404;
+        map.getPane('pane_obce_pomer2020_4').style['mix-blend-mode'] = 'normal';
+        var layer_obce_pomer2020_4 = new L.geoJson(json_obce_pomer2020_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_obce_pomer2020_4',
+            layerName: 'layer_obce_pomer2020_4',
+            pane: 'pane_obce_pomer2020_4',
+            onEachFeature: pop_obce_pomer2020_4,
+            style: style_obce_pomer2020_4_0,
+        });
+        bounds_group.addLayer(layer_obce_pomer2020_4);
+        map.addLayer(layer_obce_pomer2020_4);
+        function pop_obce_pomer2010_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Obec</strong><br />' + (feature.properties['NM4'] !== null ? autolinker.link(feature.properties['NM4'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Počet žiakov (2010)</strong><br />' + (feature.properties['ziaci2010'] !== null ? autolinker.link(feature.properties['ziaci2010'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Počet učiteľov (2010)</strong><br />' + (feature.properties['uc2010'] !== null ? autolinker.link(feature.properties['uc2010'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Počet žiakov na 1 učiteľa (2010)</strong><br />' + (feature.properties['pomer2010'] !== null ? autolinker.link(feature.properties['pomer2010'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+        function style_obce_pomer2010_5_0(feature) {
+            var context = {
+                feature: feature,
+                variables: {}
+            };
+            // Start of if blocks and style check logic
+            if (exp_obce_pomer2010_5rule0_eval_expression(context)) {
+                  return {
+                pane: 'pane_obce_pomer2010_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_obce_pomer2010_5rule1_eval_expression(context)) {
+                  return {
+                pane: 'pane_obce_pomer2010_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(191,223,255,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_obce_pomer2010_5rule2_eval_expression(context)) {
+                  return {
+                pane: 'pane_obce_pomer2010_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,192,255,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_obce_pomer2010_5rule3_eval_expression(context)) {
+                  return {
+                pane: 'pane_obce_pomer2010_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(64,160,255,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_obce_pomer2010_5rule4_eval_expression(context)) {
+                  return {
+                pane: 'pane_obce_pomer2010_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,128,255,1.0)',
+                interactive: true,
+            };
+                }
+            else {
+                return {fill: false, stroke: false};
+            }
+        }
+        map.createPane('pane_obce_pomer2010_5');
+        map.getPane('pane_obce_pomer2010_5').style.zIndex = 405;
+        map.getPane('pane_obce_pomer2010_5').style['mix-blend-mode'] = 'normal';
+        var layer_obce_pomer2010_5 = new L.geoJson(json_obce_pomer2010_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_obce_pomer2010_5',
+            layerName: 'layer_obce_pomer2010_5',
+            pane: 'pane_obce_pomer2010_5',
+            onEachFeature: pop_obce_pomer2010_5,
+            style: style_obce_pomer2010_5_0,
+        });
+        bounds_group.addLayer(layer_obce_pomer2010_5);
+        function pop_ziaci2020_point_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                <tr>\
+                        <td colspan="2"><strong>Obec</strong><br />' + (feature.properties['obec'] !== null ? autolinker.link(feature.properties['obec'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Počet žiakov (2020)</strong><br />' + (feature.properties['ziaci2020'] !== null ? autolinker.link(feature.properties['ziaci2020'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+        function style_ziaci2020_point_6_0(feature) {
+            var context = {
+                feature: feature,
+                variables: {}
+            };
+            // Start of if blocks and style check logic
+            if (exp_ziaci2020_point_6rule0_eval_expression(context)) {
+                  return {
+                pane: 'pane_ziaci2020_point_6',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,182,54,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_ziaci2020_point_6rule1_eval_expression(context)) {
+                  return {
+                pane: 'pane_ziaci2020_point_6',
+                radius: 8.5,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,182,54,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_ziaci2020_point_6rule2_eval_expression(context)) {
+                  return {
+                pane: 'pane_ziaci2020_point_6',
+                radius: 11.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,182,54,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_ziaci2020_point_6rule3_eval_expression(context)) {
+                  return {
+                pane: 'pane_ziaci2020_point_6',
+                radius: 13.5,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,182,54,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_ziaci2020_point_6rule4_eval_expression(context)) {
+                  return {
+                pane: 'pane_ziaci2020_point_6',
+                radius: 16.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,182,54,1.0)',
+                interactive: true,
+            };
+                }
+            else {
+                return {fill: false, stroke: false};
+            }
+        }
+        map.createPane('pane_ziaci2020_point_6');
+        map.getPane('pane_ziaci2020_point_6').style.zIndex = 406;
+        map.getPane('pane_ziaci2020_point_6').style['mix-blend-mode'] = 'normal';
+        var layer_ziaci2020_point_6 = new L.geoJson(json_ziaci2020_point_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ziaci2020_point_6',
+            layerName: 'layer_ziaci2020_point_6',
+            pane: 'pane_ziaci2020_point_6',
+            onEachFeature: pop_ziaci2020_point_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_ziaci2020_point_6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_ziaci2020_point_6);
+        map.addLayer(layer_ziaci2020_point_6);
+        function pop_ziaci2010_point_7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                <tr>\
+                        <td colspan="2"><strong>Obec</strong><br />' + (feature.properties['obec'] !== null ? autolinker.link(feature.properties['obec'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Počet žiakov (2010)</strong><br />' + (feature.properties['ziaci2010'] !== null ? autolinker.link(feature.properties['ziaci2010'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+        function style_ziaci2010_point_7_0(feature) {
+            var context = {
+                feature: feature,
+                variables: {}
+            };
+            // Start of if blocks and style check logic
+            if (exp_ziaci2010_point_7rule0_eval_expression(context)) {
+                  return {
+                pane: 'pane_ziaci2010_point_7',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(81,60,57,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_ziaci2010_point_7rule1_eval_expression(context)) {
+                  return {
+                pane: 'pane_ziaci2010_point_7',
+                radius: 8.5,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(81,60,57,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_ziaci2010_point_7rule2_eval_expression(context)) {
+                  return {
+                pane: 'pane_ziaci2010_point_7',
+                radius: 11.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(81,60,57,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_ziaci2010_point_7rule3_eval_expression(context)) {
+                  return {
+                pane: 'pane_ziaci2010_point_7',
+                radius: 13.5,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(81,60,57,1.0)',
+                interactive: true,
+            };
+                }
+                else if (exp_ziaci2010_point_7rule4_eval_expression(context)) {
+                  return {
+                pane: 'pane_ziaci2010_point_7',
+                radius: 16.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(81,60,57,1.0)',
+                interactive: true,
+            };
+                }
+            else {
+                return {fill: false, stroke: false};
+            }
+        }
+        map.createPane('pane_ziaci2010_point_7');
+        map.getPane('pane_ziaci2010_point_7').style.zIndex = 407;
+        map.getPane('pane_ziaci2010_point_7').style['mix-blend-mode'] = 'normal';
+        var layer_ziaci2010_point_7 = new L.geoJson(json_ziaci2010_point_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ziaci2010_point_7',
+            layerName: 'layer_ziaci2010_point_7',
+            pane: 'pane_ziaci2010_point_7',
+            onEachFeature: pop_ziaci2010_point_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_ziaci2010_point_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_ziaci2010_point_7);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Počet žiakov (2010)<br /><table><tr><td style="text-align: center;"><img src="legend/ziaci2010_point_7_11090.png" /></td><td>1 - 109</td></tr><tr><td style="text-align: center;"><img src="legend/ziaci2010_point_7_1104121.png" /></td><td>110 - 412</td></tr><tr><td style="text-align: center;"><img src="legend/ziaci2010_point_7_41311462.png" /></td><td>413 - 1146</td></tr><tr><td style="text-align: center;"><img src="legend/ziaci2010_point_7_114722523.png" /></td><td>1147 - 2252</td></tr><tr><td style="text-align: center;"><img src="legend/ziaci2010_point_7_225344834.png" /></td><td>viac ako 2253</td></tr></table>': layer_ziaci2010_point_7,'Počet žiakov (2020)<br /><table><tr><td style="text-align: center;"><img src="legend/ziaci2020_point_6_11250.png" /></td><td>1 - 125</td></tr><tr><td style="text-align: center;"><img src="legend/ziaci2020_point_6_1265061.png" /></td><td>126 - 506</td></tr><tr><td style="text-align: center;"><img src="legend/ziaci2020_point_6_50714142.png" /></td><td>507 - 1414</td></tr><tr><td style="text-align: center;"><img src="legend/ziaci2020_point_6_141528993.png" /></td><td>1415 - 2899</td></tr><tr><td style="text-align: center;"><img src="legend/ziaci2020_point_6_290041384.png" /></td><td> viac ako 2900</td></tr></table>': layer_ziaci2020_point_6,'Počet žiakov na 1 učiteľa (2010)<br /><table><tr><td style="text-align: center;"><img src="legend/obce_pomer2010_5_01230.png" /></td><td>0,1 - 2,3</td></tr><tr><td style="text-align: center;"><img src="legend/obce_pomer2010_5_24741.png" /></td><td>2,4 - 7,4</td></tr><tr><td style="text-align: center;"><img src="legend/obce_pomer2010_5_751092.png" /></td><td>7,5 - 10,9</td></tr><tr><td style="text-align: center;"><img src="legend/obce_pomer2010_5_111423.png" /></td><td>11 - 14,2</td></tr><tr><td style="text-align: center;"><img src="legend/obce_pomer2010_5_1432284.png" /></td><td>14,3 - 22,8</td></tr></table>': layer_obce_pomer2010_5,'Počet žiakov na 1 učiteľa (2020)<br /><table><tr><td style="text-align: center;"><img src="legend/obce_pomer2020_4_0130.png" /></td><td>0,1 - 3</td></tr><tr><td style="text-align: center;"><img src="legend/obce_pomer2020_4_31821.png" /></td><td>3,1 - 8,2</td></tr><tr><td style="text-align: center;"><img src="legend/obce_pomer2020_4_831222.png" /></td><td>8,3 - 12,2</td></tr><tr><td style="text-align: center;"><img src="legend/obce_pomer2020_4_123183.png" /></td><td>12,3 - 18</td></tr><tr><td style="text-align: center;"><img src="legend/obce_pomer2020_4_1812734.png" /></td><td>18,1 - 27,3</td></tr></table>': layer_obce_pomer2020_4,'<img src="legend/hranica_okresy_3.png" /> Hranice okresu': layer_hranica_okresy_3,'<img src="legend/hranica_obce_2.png" /> Hranice obce': layer_hranica_obce_2,"Satelitný podklad": layer_ESRIWorldImagery_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>

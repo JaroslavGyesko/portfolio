@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <link type="text/css" rel="stylesheet" href="../../CSS/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+    <meta name="author" content="Jaroslav Gyesko">
+    <meta name="keywords" content="Trojúhelnik, vily, Tugendhat, Arnold, Low-Beer">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,500;1,100;1,500;1,700&display=swap" rel="stylesheet">
+    <title>
+      Das Brünner Villendreieck
+    </title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../../JS/script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+        <header> 
+            <nav>
+              <ul>
+                <li class="nav_buttons" id="logo_button">
+                  <a id="logo" href="../HOMEPAGE/index_de.html" accesskey="S"><img src="../../IMAGES/logo_biele2.png" alt="Dreieck-Logo"><p>Das Brünner Villendreieck</p></a>
+                </li>
+                <li class="nav_buttons" id="project_button">
+                  <a href="uber_projekt.html" accesskey="P">Über Projekt</a>
+                </li>
+                <li class="nav_buttons" id="reservation_button">
+                  <a href="../RESERVATION/reservierung.html" accesskey="R">Reservierung</a>
+                </li>
+                <li class="nav_buttons" id="map_button">
+                  <a href="../MAP/map_de.html" accesskey="L">Landkarte</a>
+                </li>
+                <li class="nav_buttons" id="contacts_button">
+                  <a href="../CONTACTS/kontakte.html" accesskey="K">Kontakte</a>
+                </li>
+                <li id="socials_button">
+                <a href="#"><img src="../../IMAGES/fb.png" alt="Facebook-Account des Villendreieck" title="FB Villendreieck" width="30"></a>
+                <a href="#"><img src="../../IMAGES/ig.png" alt="Instagram-Account des Villendreieck" title="IG Villendreieck" width="30"></a>
+                <a href="javascript:void(0);" onclick="toggleSearch()"><img src="../../IMAGES/lupa_biela.png" alt="Suchen" title="Suchen" width="30"></a> 
+                </li>
+                <li class="menu-button">
+                    <img src="../../IMAGES/menu_biele.png" alt="Menu Button" onclick="toggleSidebar()">
+                </li>
+              </ul>
+            </nav>
+          </header>
+      <div id="search-container">
+        <form onsubmit="submitSearchForm(event)">
+          <input type="text" id="search-input" placeholder="Suchen...">
+          <img src="../../IMAGES/lupa_cierna.png" alt="Suchen" onclick="submitSearchForm(event)">
+        </form>
+      </div>
+      <div class="sidebar">
+        <div class="sidebar-content">
+          <li class="menu-button">
+            <img src="../../IMAGES/menu_biele.png" alt="Menu Button" onclick="toggleSidebar()">
+        </li>
+        <a href="uber_projekt.html" class="sidebar-button">Über Projekt</a>
+        <a href="../RESERVATION/reservierung.html" class="sidebar-button">Reservierung</a>
+        <a href="../MAP/map_de.html" class="sidebar-button">Landkarte</a>
+        <a href="../CONTACTS/kontakte.html" class="sidebar-button">Kontakte</a>
+          <div id="socials_button" class="sidebar-social">
+            <a href="#"><img src="../../IMAGES/fb.png" alt="Facebook-Account des Villendreieck" title="FB Villendreieck" width="30"></a>
+            <a href="#"><img src="../../IMAGES/ig.png" alt="Instagram-Account des Villendreieck" title="IG Villendreieck" width="30"></a>
+            <a href="javascript:void(0);" onclick="toggleSearch_sidebar()"><img src="../../IMAGES/lupa_biela.png" alt="Suchen" title="Suchen" width="30"></a> 
+          </div>
+          <div id="search-container">
+            <form onsubmit="submitSearchForm(event)">
+            <input type="text" id="search-input" placeholder="Suchen...">
+            <img src="../../IMAGES/lupa_cierna.png" alt="Suchen" onclick="submitSearchForm(event)">
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="container2">
+        <div id="cookie-modal-container">
+          <div id="cookie-modal">
+            <button class="close-button" onclick="closeCookieModal()">X</button>
+            <h2>Cookie-Einstellungen</h2>
+            <p>Wir und unsere Partner speichern und greifen auf nicht sensible Daten von Ihrem Gerät zu (z. B. Cookies oder eine eindeutige Gerätekennung).<br>
+              Darüber hinaus verarbeiten wir auch personenbezogene Daten wie IP-Adressen und Cookie-Identifikatoren, um Daten beispielsweise zur Anzeige personalisierter Werbung, zur Messung der Präferenzen unserer Besucher usw. zu verarbeiten.<br>
+              Sie können Ihre Einstellungen jederzeit in unserer Datenschutzerklärung auf dieser Website ändern. Ihre Zustimmung zur Verwendung von Cookies können Sie für alle Zwecke erteilen, indem Sie auf „Ich stimme zu“ klicken, für einzelne Zwecke können Sie in den Einstellungen Ihre Zustimmung zur Verwendung von Cookies erteilen, indem Sie auf „Cookie-Einstellungen“ klicken. <br>
+              Wenn Sie mit der Verwendung von Cookies nicht einverstanden sind, klicken Sie auf „Ich stimme nicht zu“.</p>
+            <br>
+            <br>
+            <br></p>
+            <button id="accept" class="accept" onclick="saveCookiePreferences(true)">Ich stimme zu</button>
+            <button id="decline" class="decline" onclick="saveCookiePreferences(false)">Ich stimme nicht zu</button>
+          </div>
+        </div>
+        <div id="text_project">
+          <h2>
+            Über Projekt
+          </h2>
+          <p>
+            Das Projekt <b>„Brünner Villendreieck“</b> schafft einen einzigartigen Raum, der <b>kulturelle, historische und architektonische Elemente</b> von drei außergewöhnlichen Gebäuden vereint &#8209; <b>Villen Tugendhat, Arnold und Löw-Beer</b>.
+            Dieses Dreieck bietet vielfältige Erlebnisse für unterschiedliche Besuchergruppen. Diese ehrgeizige Idee bringt ein einzigartiges Dreieck des kulturellen Erbes mit sich.
+           </p><br>
+           <p>
+            Ziel dieses Projekts ist es, nicht nur das Bewusstsein für diese außergewöhnlichen Räume zu schärfen, sondern auch ein vielfältiges Programm für ein breites Besucherspektrum anzubieten. 
+            Familien mit Kindern können sich auf interaktive Programme und Lernspiele freuen, Architekturliebhaber aus anderen Ländern können sich auf fachkundige Führungen in verschiedenen Sprachen freuen, die die architektonischen Besonderheiten und die Geschichte einzelner Gebäude beleuchten.
+            Ein einziger Eintrittspreis für alle drei Villen bringt Flexibilität und Vereinfachung für Besucher, die beim gleichzeitigen Besuch mehrerer Villen von Ermäßigungen profitieren können. Dies schafft eine Synergie zwischen diesen Kulturschätzen und unterstützt den Tourismus in Brünn.
+          </p><br>
+           <p>
+            Die digitale Verbindung der Villen durch eine neue visuelle Identität und Website fördert einen modernen Ansatz und erleichtert den Ticketkauf. Die Zusammenarbeit mit Spendenorganisationen wie dem Museum Brünn und dem Museum der Stadt Brünn gewährleistet eine effiziente Verwaltung der Reservierungen und die Gesamtorganisation der Besuche.
+            Die Belebung des Areals des „Brünner Villendreiecks“ durch Lehrpfade, Bänke, Pavillons und einen Kräutergarten erhöht die Attraktivität für verschiedene Besuchergruppen. Dies macht das Projekt nicht nur zu einem Ort der Kultur, sondern auch der Entspannung und der Verbindung mit der Natur.
+           </p><br>
+            <p>
+            Ein wesentlicher Bestandteil des Projekts ist die soziale Verbindung der Villen. Einzigartige Veranstaltungen wie Chanukka- und Purim-Feiern verbinden Geschichte und Gegenwart und bieten den Besuchern ein unvergessliches Kulturerlebnis. Die Zusammenarbeit mit Brünner Unternehmen und die Organisation von Ausstellungen und Konzerten im „Dreieck berühmter Villen und Gärten“ tragen zur Bereicherung des kulturellen Lebens in Brünn bei.
+            Die Verbindung der Villa mit Unternehmen und die Schaffung eines gemeinsamen Souvenirs, beispielsweise eines Brettspiels, gibt Besuchern die Möglichkeit, nicht nur das Erlebnis, sondern auch eine Erinnerung an ihr Wissen über die einzigartige Geschichte und Architektur des Dreiecks berühmter Villen und Gärten mit nach Hause zu nehmen .
+            Insgesamt bietet dieses Projekt nicht nur ein reichhaltiges kulturelles Erlebnis für Besucher, sondern trägt auch zur Bereicherung des lokalen Kulturerbes bei. Mit seinem umfassenden Ansatz und dem Bestreben, verschiedene Besuchergruppen einzubeziehen, könnte es zu einem außergewöhnlichen Ort und einem stolzen Vertreter auf der UNESCO-Liste werden.
+          </p><br> 
+          <div class="logos">
+            <a href="https://en.brno.cz/">
+              <img src="../../IMAGES/logo_magistrat.png" alt="Magistrát Města Brna">
+            </a>
+            <a href="https://www.muzeumbrna.cz/">
+              <img src="../../IMAGES/muzeum_mesta_brna_logo.png" alt="Muzeum Města Brna">
+            </a>
+            <a href="https://www.muzeumbrnenska.cz/en/">
+              <img src="../../IMAGES/muzeum_brnenska_logo.png" alt="Muzeum Brněnska">
+            </a>
+            <a href="https://www.unesco.org/en">
+              <img src="../../IMAGES/unesco_logo.png" alt="UNESCO">
+            </a>
+          </div>
+          </div>
+          <div class="scroll-to-top" onclick="scrollToTop()">
+            &#8593;
+        </div>
+          <footer>
+            <div class="lang">
+                <a href="o_projektu.html"><img src="../../IMAGES/cz_flag.png" alt="Česky" title="Česky" width="40"></a>
+                <a href="about_project.html"><img src="../../IMAGES/uk_flag.png" alt="English" title="English" width="40"></a>
+                <a href="about_project_he.html"><img src="../../IMAGES/is_flag.png" alt="עברית" title="עברית" width="40"></a>
+            </div>
+            <p>Erstellt von Jaroslav Gyesko. <span>&#169;</span> 2024 <span>&#124;</span> <a href="mailto:554226@muni.cz">Kontakt</a> <span>&#124;</span> <a href="../ACCESSIBILITY_STATEMENT/erklaerung.html">Erklärung zur Barrierefreiheit</a></p>
+          <p><button id="dark_button" onclick="darkSwitch()">Dunkelmodus umschalten</button></p>
+        </footer>
+  </div>
+  </div>
+</body>
+</html>

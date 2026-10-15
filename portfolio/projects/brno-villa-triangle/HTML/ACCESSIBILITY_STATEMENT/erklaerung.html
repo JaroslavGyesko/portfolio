@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <link type="text/css" rel="stylesheet" href="../../CSS/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+    <meta name="author" content="Jaroslav Gyesko">
+    <meta name="keywords" content="Triangle, villas, Tugendhat, Arnold, Low-Beer">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,500;1,100;1,500;1,700&display=swap" rel="stylesheet">
+    <title>
+    Das Brünner Villendreieck
+    </title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../../JS/script.js"></script>
+  </head>
+  <body>
+    <div class="container" id="index_container">
+        <header> 
+            <nav>
+              <ul>
+                <li class="nav_buttons" id="logo_button">
+                  <a id="logo" href="../HOMEPAGE/index_de.html" accesskey="S"><img src="../../IMAGES/logo_biele2.png" alt="Dreieck-Logo"><p>Das Brünner Villendreieck</p></a>
+                </li>
+                <li class="nav_buttons" id="project_button">
+                  <a href="../ABOUT_PROJECT/uber_projekt.html" accesskey="P">Über Projekt</a>
+                </li>
+                <li class="nav_buttons" id="reservation_button">
+                  <a href="../RESERVATION/reservierung.html" accesskey="R">Reservierung</a>
+                </li>
+                <li class="nav_buttons" id="map_button">
+                  <a href="../MAP/map_de.html" accesskey="L">Landkarte</a>
+                </li>
+                <li class="nav_buttons" id="contacts_button">
+                  <a href="../CONTACTS/kontakte.html" accesskey="K">Kontakte</a>
+                </li>
+                <li id="socials_button">
+                <a href="#"><img src="../../IMAGES/fb.png" alt="Facebook-Account des Villendreieck" title="FB Villendreieck" width="30"></a>
+                <a href="#"><img src="../../IMAGES/ig.png" alt="Instagram-Account des Villendreieck" title="IG Villendreieck" width="30"></a>
+                <a href="javascript:void(0);" onclick="toggleSearch()"><img src="../../IMAGES/lupa_biela.png" alt="Suchen" title="Suchen" width="30"></a> 
+                </li>
+                <li class="menu-button">
+                    <img src="../../IMAGES/menu_biele.png" alt="Menu Button" onclick="toggleSidebar()">
+                </li>
+              </ul>
+            </nav>
+          </header>
+      <div id="search-container">
+        <form onsubmit="submitSearchForm(event)">
+          <input type="text" id="search-input" placeholder="Suchen...">
+          <img src="../../IMAGES/lupa_cierna.png" alt="Suchen" onclick="submitSearchForm(event)">
+        </form>
+      </div>
+      <div class="sidebar">
+        <div class="sidebar-content">
+          <li class="menu-button">
+            <img src="../../IMAGES/menu_biele.png" alt="Menu Button" onclick="toggleSidebar()">
+        </li>
+        <a href="../ABOUT_PROJECT/uber_projekt.html" class="sidebar-button">Über Projekt</a>
+        <a href="../RESERVATION/reservierung.html" class="sidebar-button">Reservierung</a>
+        <a href="../MAP/map_de.html" class="sidebar-button">Landkarte</a>
+        <a href="../CONTACTS/kontakte.html" class="sidebar-button">Kontakte</a>
+          <div id="socials_button" class="sidebar-social">
+            <a href="#"><img src="../../IMAGES/fb.png" alt="Facebook-Account des Villendreieck" title="FB Villendreieck" width="30"></a>
+            <a href="#"><img src="../../IMAGES/ig.png" alt="Instagram-Account des Villendreieck" title="IG Villendreieck" width="30"></a>
+            <a href="javascript:void(0);" onclick="toggleSearch_sidebar()"><img src="../../IMAGES/lupa_biela.png" alt="Suchen" title="Suchen" width="30"></a> 
+          </div>
+          <div id="search-container">
+            <form onsubmit="submitSearchForm(event)">
+            <input type="text" id="search-input" placeholder="Suchen...">
+            <img src="../../IMAGES/lupa_cierna.png" alt="Suchen" onclick="submitSearchForm(event)">
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="container2">
+        <div id="cookie-modal-container">
+          <div id="cookie-modal">
+            <button class="close-button" onclick="closeCookieModal()">X</button>
+            <h2>Cookie-Einstellungen</h2>
+            <p>Wir und unsere Partner speichern und greifen auf nicht sensible Daten von Ihrem Gerät zu (z. B. Cookies oder eine eindeutige Gerätekennung).<br>
+              Darüber hinaus verarbeiten wir auch personenbezogene Daten wie IP-Adressen und Cookie-Identifikatoren, um Daten beispielsweise zur Anzeige personalisierter Werbung, zur Messung der Präferenzen unserer Besucher usw. zu verarbeiten.<br>
+              Sie können Ihre Einstellungen jederzeit in unserer Datenschutzerklärung auf dieser Website ändern. Ihre Zustimmung zur Verwendung von Cookies können Sie für alle Zwecke erteilen, indem Sie auf „Ich stimme zu“ klicken, für einzelne Zwecke können Sie in den Einstellungen Ihre Zustimmung zur Verwendung von Cookies erteilen, indem Sie auf „Cookie-Einstellungen“ klicken. <br>
+              Wenn Sie mit der Verwendung von Cookies nicht einverstanden sind, klicken Sie auf „Ich stimme nicht zu“.</p>
+            <br>
+            <br>
+            <br></p>
+            <button id="accept" class="accept" onclick="saveCookiePreferences(true)">Ich stimme zu</button>
+            <button id="decline" class="decline" onclick="saveCookiePreferences(false)">Ich stimme nicht zu</button>
+          </div>
+        </div>
+        <div id="accesibility_text">  
+          <h2 id="access_header">
+            Erklärung zur Barrierefreiheit
+            </h2>
+            <h3>INHALT DER WEBSITE</h3>
+            <p>
+            Diese Seite wurde für das MMB-Projekt erstellt. Es ist in deutscher Sprache verfasst und entspricht den grammatikalischen Standards der deutschen Rechtschreibung
+            </p>
+            <h3>STANDARDS</h3>
+            <p>
+            Zur Erstellung dieser Seite wurde die Sprache HTML5 verwendet. Grafikstile wurden mithilfe von Cascading Style Sheets (CSS) erstellt und geändert.
+            Für eine bessere Seitentransparenz wurde außerdem ein JavaScript-Element zur dynamischen Interaktion mit dem Besucher eingebunden.</p>
+            <h3>
+            FARBEN
+            </h3>
+            <p>
+            Auf dieser Seite sind die Textfarben so eingestellt, dass sie den Lesbarkeitsstandards entsprechen.
+            Es ist jedoch möglich, Stellen zu sehen, an denen es möglicherweise zu Lesbarkeitsproblemen kommt. Aus diesem Grund befindet sich unten auf der Seite die Schaltfläche <b>„Dunkelmodus umschalten“</b></p>
+            <h3>
+            BILDER
+            </h3>
+            <p>
+            Alle der Seite hinzugefügten Bilder liegen im <b>.jpg, .png</b>-Format vor. Sie sind von hoher Qualität und verfügen auch über definierte Alternativtexte für den Fall, dass sie nicht vom Server geladen werden können.
+            </p>
+            <h3>
+            TASTATÜRKÜRZEL
+            </h3>
+            <p>
+            Zur schnelleren Navigation und einfacheren Nutzung dieser Seite wurden die folgenden Tastaturkürzel <b>(ALT+UMSCHALT+(Taste)) erstellt:</b>
+            </p>
+              <ul style="list-style-position: inside">
+                <li>S - Startseite</li>
+                <li>P - Über Projekt</li>
+                <li>R - Reservierung</li>
+                <li>L - Landkarte</li>
+                <li>K - Kontakte</li>  
+              </ul>
+            </div>
+          <div class="scroll-to-top" onclick="scrollToTop()">
+            &#8593;
+        </div>
+        <footer>
+            <div class="lang">
+                <a href="prohlaseni.html"><img src="../../IMAGES/cz_flag.png" alt="Česky" title="Česky" width="40"></a>
+                <a href="accesibility.html"><img src="../../IMAGES/uk_flag.png" alt="English" title="English" width="40"></a>
+                <a href="accesibility_he.html"><img src="../../IMAGES/is_flag.png" alt="עברית" title="עברית" width="40"></a>
+            </div>
+            <p>Erstellt von Jaroslav Gyesko. <span>&#169;</span> 2024 <span>&#124;</span> <a href="mailto:554226@muni.cz">Kontakt</a> <span>&#124;</span> <a href="../ACCESSIBILITY_STATEMENT/erklaerung.html">Erklärung zur Barrierefreiheit</a></p>
+            <p><button id="dark_button" onclick="darkSwitch()">Dunkelmodus umschalten</button></p>
+        </footer>
+  </div>
+    </div>
+  </body>
+</html>

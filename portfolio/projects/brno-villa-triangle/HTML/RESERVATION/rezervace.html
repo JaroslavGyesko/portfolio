@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="cz">
+  <head>
+    <link type="text/css" rel="stylesheet" href="../../CSS/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+    <meta name="author" content="Jaroslav Gyesko">
+    <meta name="keywords" content="Trojúhelnik, vily, Tugendhat, Arnold, Low-Beer">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,500;1,100;1,500;1,700&display=swap" rel="stylesheet">
+    <title>
+      Brněnský trojúhelník slavných vil a zahrad
+    </title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../../JS/script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header> 
+        <nav>
+          <ul>
+            <li class="nav_buttons" id="logo_button">
+              <a id="logo" href="../HOMEPAGE/index.html" accesskey="D"><img src="../../IMAGES/logo_biele2.png" alt="Logo projektu"><p>Trojúhelník slavných vil a zahrad v Brně</p></a>
+            </li>
+            <li class="nav_buttons" id="project_button">
+              <a href="../ABOUT_PROJECT/o_projektu.html" accesskey="P">O projektu</a>
+            </li>
+            <li class="nav_buttons" id="reservation_button">
+              <a href="rezervace.html" accesskey="R">Rezervace</a>
+            </li>
+            <li class="nav_buttons" id="map_button">
+              <a href="../MAP/mapa.html" accesskey="M">Mapa</a>
+            </li>
+            <li class="nav_buttons" id="contacts_button">
+              <a href="../CONTACTS/kontakty.html" accesskey="K">Kontakty</a>
+            </li>
+            <li class="obrazky2" id="socials_button">
+              <a href="#"><img src="../../IMAGES/fb.png" alt="Facebook účet projektu" title="FB Trojúhelník" width="30"></a> 
+              <a href="#"><img src="../../IMAGES/ig.png" alt="Instagramový účet projektu" title="IG Trojúhelník" width="30"></a> 
+              <a href="javascript:void(0);" onclick="toggleSearch()"><img src="../../IMAGES/lupa_biela.png" alt="Hledání" title="Hledání" width="30"></a> 
+            </li>
+            <li class="menu-button">
+                <img src="../../IMAGES/menu_biele.png" alt="Menu Button" onclick="toggleSidebar()">
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <div id="search-container">
+        <form onsubmit="submitSearchForm(event)">
+          <input type="text" id="search-input" placeholder="Hledejte...">
+          <img src="../../IMAGES/lupa_cierna.png" alt="Search" onclick="submitSearchForm(event)">
+        </form>
+      </div>
+      <div class="sidebar">
+        <div class="sidebar-content">
+          <li class="menu-button">
+            <img src="../../IMAGES/menu_biele.png" alt="Menu Button" onclick="toggleSidebar()">
+        </li>
+        <a href="../ABOUT_PROJECT/o_projektu.html" class="sidebar-button">O projektu</a>
+        <a href="rezervace.html" class="sidebar-button">Rezervace</a>
+        <a href="../MAP/mapa.html" class="sidebar-button">Mapa</a>
+        <a href="../CONTACTS/kontakty.html" class="sidebar-button">Kontakty</a>
+          <div id="socials_button" class="sidebar-social">
+            <a href="#"><img src="../../IMAGES/fb.png" alt="Facebook účet projektu" title="FB Trojúhelník" width="30"></a>
+            <a href="#"><img src="../../IMAGES/ig.png" alt="Instagramový účet projektu" title="IG Trojúhelník" width="30"></a>
+            <a href="javascript:void(0);" onclick="toggleSearch_sidebar()"><img src="../../IMAGES/lupa_biela.png" alt="Hledání" title="Hledání" width="30"></a>
+          </div>
+          <div id="search-container">
+            <form onsubmit="submitSearchForm(event)">
+              <input type="text" id="search-input" placeholder="Hledejte...">
+              <img src="../../IMAGES/lupa_cierna.png" alt="Search" onclick="submitSearchForm(event)">
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="container2">
+        <div id="cookie-modal-container">
+          <div id="cookie-modal">
+            <button class="close-button" onclick="closeCookieModal()">X</button>
+            <h2>Nastavení cookies</h2>
+            <p>My a naši partneři ukládáme z vašeho zařízení data, která nejsou citlivá, a získáváme k nim přístup (například soubory cookie nebo jedinečný identifikátor zařízení).<br>
+              Kromě toho také zpracováváme osobní údaje, jako jsou IP adresy a identifikátory cookie, abychom mohli zpracovávat údaje, například zobrazovat přizpůsobené reklamy, měřit preference našich návštěvníků atd.<br>
+              Své preference můžete kdykoli změnit v našich pravidlech ochrany soukromí na tomto webu. Svůj souhlas s použitím cookies pro všechny účely udělíte kliknutím na „Souhlasím“, souhlasy s použitím pro jednotlivé účely můžete udělit v nastaveních kliknutím na „Nastavení cookie“. <br>
+              Pokud s použitím cookies nesouhlasíte, klikněte na „Nesouhlasím“.</p>
+            <br></p>
+            <button id="accept" class="accept" onclick="saveCookiePreferences(true)">Souhlasím</button>
+            <button id="decline" class="decline" onclick="saveCookiePreferences(false)">Nesouhlasím</button>
+          </div>
+        </div>
+        <div id="text_project" style="justify-content: center">
+          <h2 id="res_txt">
+            Rezervujte si prohlídku přes portál BrnoID.
+          </h2>
+          <a id="res_button" href="https://www.brnoid.cz/cs/vstupenky-tugendhat">Vstupenky</a>
+          </div>
+          <div class="scroll-to-top" onclick="scrollToTop()">
+            &#8593;
+        </div>
+          <footer>
+            <div class="lang">
+                <a href="reservation.html"><img src="../../IMAGES/uk_flag.png" alt="English" title="English" width="40"></a>
+                <a href="reservierung.html"><img src="../../IMAGES/gm_flag.png" alt="Deutsch" title="Deutsch" width="40"></a>
+                <a href="reservation_he.html"><img src="../../IMAGES/is_flag.png" alt="עברית" title="עברית" width="40"></a>
+            </div>
+            <p>Created by Jaroslav Gyesko. <span>&#169;</span> 2024 <span>&#124;</span> <a href="mailto:554226@muni.cz">Kontakt</a> <span>&#124;</span> <a href="../ACCESSIBILITY_STATEMENT/prohlaseni.html">Prohlášení o přístupnosti</a></p>
+            <p><button id="dark_button" onclick="darkSwitch()">Vypnout/Zapnout tmavý režim</button></p>
+        </footer>
+  </div>
+  </div>
+</body>
+</html>

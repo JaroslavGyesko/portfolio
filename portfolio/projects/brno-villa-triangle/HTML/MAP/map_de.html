@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <link type="text/css" rel="stylesheet" href="../../CSS/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+    <meta name="author" content="Jaroslav Gyesko">
+    <meta name="keywords" content="Trojúhelnik, vily, Tugendhat, Arnold, Low-Beer">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,500;1,100;1,500;1,700&display=swap" rel="stylesheet">
+    <title>
+        Das Brünner Villendreieck
+    </title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../../JS/script.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDg9foY-IWTTKYTt3jXz01-T6628IhTZA0&callback=initMap"></script>
+  </head>
+  <body>
+    <div class="container">
+        <header> 
+            <nav>
+              <ul>
+                <li class="nav_buttons" id="logo_button">
+                  <a id="logo" href="../HOMEPAGE/index_de.html" accesskey="S"><img src="../../IMAGES/logo_biele2.png" alt="Dreieck-Logo"><p>Das Brünner Villendreieck</p></a>
+                </li>
+                <li class="nav_buttons" id="project_button">
+                  <a href="../ABOUT_PROJECT/uber_projekt.html" accesskey="P">Über Projekt</a>
+                </li>
+                <li class="nav_buttons" id="reservation_button">
+                  <a href="../RESERVATION/reservierung.html" accesskey="R">Reservierung</a>
+                </li>
+                <li class="nav_buttons" id="map_button">
+                  <a href="map_de.html" accesskey="L">Landkarte</a>
+                </li>
+                <li class="nav_buttons" id="contacts_button">
+                  <a href="../CONTACTS/kontakte.html" accesskey="K">Kontakte</a>
+                </li>
+                <li id="socials_button">
+                <a href="#"><img src="../../IMAGES/fb.png" alt="Facebook-Account des Villendreieck" title="FB Villendreieck" width="30"></a>
+                <a href="#"><img src="../../IMAGES/ig.png" alt="Instagram-Account des Villendreieck" title="IG Villendreieck" width="30"></a>
+                <a href="javascript:void(0);" onclick="toggleSearch()"><img src="../../IMAGES/lupa_biela.png" alt="Suchen" title="Suchen" width="30"></a> 
+                </li>
+                <li class="menu-button">
+                    <img src="../../IMAGES/menu_biele.png" alt="Menu Button" onclick="toggleSidebar()">
+                </li>
+              </ul>
+            </nav>
+          </header>
+      <div id="search-container">
+        <form onsubmit="submitSearchForm(event)">
+          <input type="text" id="search-input" placeholder="Suchen...">
+          <img src="../../IMAGES/lupa_cierna.png" alt="Suchen" onclick="submitSearchForm(event)">
+        </form>
+      </div>
+      <div class="sidebar">
+        <div class="sidebar-content">
+          <li class="menu-button">
+            <img src="../../IMAGES/menu_biele.png" alt="Menu Button" onclick="toggleSidebar()">
+        </li>
+        <a href="../ABOUT_PROJECT/uber_projekt.html" class="sidebar-button">Über Projekt</a>
+        <a href="../RESERVATION/reservierung.html" class="sidebar-button">Reservierung</a>
+        <a href="map_de.html" class="sidebar-button">Landkarte</a>
+        <a href="../CONTACTS/kontakte.html" class="sidebar-button">Kontakte</a>
+          <div id="socials_button" class="sidebar-social">
+            <a href="#"><img src="../../IMAGES/fb.png" alt="Facebook-Account des Villendreieck" title="FB Villendreieck" width="30"></a>
+            <a href="#"><img src="../../IMAGES/ig.png" alt="Instagram-Account des Villendreieck" title="IG Villendreieck" width="30"></a>
+            <a href="javascript:void(0);" onclick="toggleSearch_sidebar()"><img src="../../IMAGES/lupa_biela.png" alt="Suchen" title="Suchen" width="30"></a> 
+          </div>
+          <div id="search-container">
+            <form onsubmit="submitSearchForm(event)">
+            <input type="text" id="search-input" placeholder="Suchen...">
+            <img src="../../IMAGES/lupa_cierna.png" alt="Suchen" onclick="submitSearchForm(event)">
+            </form>
+          </div>
+        </div>
+      </div>
+    <div class="container2">
+      <div id="cookie-modal-container">
+        <div id="cookie-modal">
+          <button class="close-button" onclick="closeCookieModal()">X</button>
+          <h2>Cookie-Einstellungen</h2>
+          <p>Wir und unsere Partner speichern und greifen auf nicht sensible Daten von Ihrem Gerät zu (z. B. Cookies oder eine eindeutige Gerätekennung).<br>
+            Darüber hinaus verarbeiten wir auch personenbezogene Daten wie IP-Adressen und Cookie-Identifikatoren, um Daten beispielsweise zur Anzeige personalisierter Werbung, zur Messung der Präferenzen unserer Besucher usw. zu verarbeiten.<br>
+            Sie können Ihre Einstellungen jederzeit in unserer Datenschutzerklärung auf dieser Website ändern. Ihre Zustimmung zur Verwendung von Cookies können Sie für alle Zwecke erteilen, indem Sie auf „Ich stimme zu“ klicken, für einzelne Zwecke können Sie in den Einstellungen Ihre Zustimmung zur Verwendung von Cookies erteilen, indem Sie auf „Cookie-Einstellungen“ klicken. <br>
+            Wenn Sie mit der Verwendung von Cookies nicht einverstanden sind, klicken Sie auf „Ich stimme nicht zu“.</p>
+          <br>
+          <br>
+          <br></p>
+          <button id="accept" class="accept" onclick="saveCookiePreferences(true)">Ich stimme zu</button>
+          <button id="decline" class="decline" onclick="saveCookiePreferences(false)">Ich stimme nicht zu</button>
+        </div>
+      </div>
+        <div id="map_content">
+          <h2>So finden Sie uns:</h2>
+          <div id="map"></div>
+          <p>
+            Vom Stadtzentrum aus kann man das Dreieck in 20 Minuten zu Fuß erreichen. Wenn Sie lieber zu Fuß gehen, steht Ihnen diese Option zur Verfügung. 
+            Gleichzeitig stehen auch alternative Zugangsmöglichkeiten zum Dreieck zur Verfügung, nämlich:
+          </p>
+          <h3>Öffentlicher Verkehr:</h3>
+          <p>
+            Linie 9 vom Hauptbahnhof bis zur Haltestelle <b>Tomanova</b> (4 Min. Fußweg zum Triangle)<br>
+            Linie 67 von der Haltestelle <b>Jundrov/Avion Shopping Park</b> bis zur Haltestelle <b>Schodova</b> (1 Min. Fußweg zum Dreieck)<br>
+            Linie 25/26 von der Haltestelle <b>Štefánikova čtvrť/Kamenný vrch/Osová</b> bis zur Haltestelle <b>Schodova</b> (7 Min. Fußweg zum Dreieck), weitere Fahrpläne finden Sie unter <b >www.dpmb.cz</b>
+          </p>
+          <h3>Mit dem Auto:</h3>
+          <p>
+            In der Nähe des Dreiecks gibt es keine ausgewiesenen Besucherparkplätze.
+            Bei Verfügbarkeit in der Anwohnerzone können Sie jedoch zwischen 6:00 und 17:00 Uhr kostenfrei parken. sowohl an Wochentagen als auch am Wochenende.
+            Die Zahlung kann über verschiedene Mittel erfolgen, darunter <b>SMS, den Parkautomaten und die Parksimply-Anwendung</b>.
+            Für diejenigen, die ausreichend Parkplätze suchen, ist die nächstgelegene Parkmöglichkeit am <b>Moravské náměstí</b>.
+            Von dort aus können Sie entweder mit der Straßenbahn <b>Česká</b> oder <b>Moravské náměstí</b> bis zur Haltestelle <b>Dětská nemocnice</b> fahren und dann noch einen kurzen 5-minütigen Spaziergang dorthin unternehmen das Dreieck erreichen.
+          </p>
+          </div>
+          <div class="scroll-to-top" onclick="scrollToTop()">
+            &#8593;
+        </div>
+        <footer>
+            <div class="lang">
+                <a href="mapa.html"><img src="../../IMAGES/cz_flag.png" alt="Česky" title="Česky" width="40"></a>
+                <a href="map_en.html"><img src="../../IMAGES/uk_flag.png" alt="English" title="English" width="40"></a>
+                <a href="map_he.html"><img src="../../IMAGES/is_flag.png" alt="עברית" title="עברית" width="40"></a>
+            </div>
+            <p>Erstellt von Jaroslav Gyesko. <span>&#169;</span> 2024 <span>&#124;</span> <a href="mailto:554226@muni.cz">Kontakt</a> <span>&#124;</span> <a href="../ACCESSIBILITY_STATEMENT/erklaerung.html">Erklärung zur Barrierefreiheit</a></p>
+            <p><button id="dark_button" onclick="darkSwitch()">Dunkelmodus umschalten</button></p>
+        </footer>
+  </div>
+  </div>
+</body>
+</html>

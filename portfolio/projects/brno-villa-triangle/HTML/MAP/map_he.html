@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="he">
+  <head>
+    <link type="text/css" rel="stylesheet" href="../../CSS/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+    <meta name="author" content="Jaroslav Gyesko">
+    <meta name="keywords" content="Trojúhelnik, vily, Tugendhat, Arnold, Low-Beer">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,500;1,100;1,500;1,700&display=swap" rel="stylesheet">
+    <title>
+        משולש הווילה של ברנו
+    </title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../../JS/script.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDg9foY-IWTTKYTt3jXz01-T6628IhTZA0&callback=initMap"></script>
+  </head>
+  <body>
+    <div class="container">
+        <header> 
+            <nav>
+              <ul>
+                <li class="nav_buttons" id="logo_button">
+                  <a id="logo" href="../HOMEPAGE/index_he.html" accesskey="H"><img src="../../IMAGES/logo_biele2.png" alt="הלוגו של המשולש"><p>משולש הווילה של ברנו</p></a>
+                </li>
+                <li class="nav_buttons" id="project_button">
+                  <a href="../ABOUT_PROJECT/about_project_he.html" accesskey="P">על הפרויקט</a>
+                </li>
+                <li class="nav_buttons" id="reservation_button">
+                  <a href="../RESERVATION/reservation_he.html" accesskey="R">מערכת הזמנות</a>
+                </li>
+                <li class="nav_buttons" id="map_button">
+                  <a href="map_he.html" accesskey="M">מַפָּה</a>
+                </li>
+                <li class="nav_buttons" id="contacts_button">
+                  <a href="../CONTACTS/contacts_he.html" accesskey="C">אנשי קשר</a>
+                </li>
+                <li id="socials_button">
+                  <a href="#"><img src="../../IMAGES/fb.png" alt="חשבון הפייסבוק של משולש" title="פייסבוק של משולש" width="30"></a> 
+                  <a href="#"><img src="../../IMAGES/ig.png" alt="חשבון האינסטגרם של משולש" title="האינסטגרם של המשולש" width="30"></a> 
+                  <a href="javascript:void(0);" onclick="toggleSearch()"><img src="../../IMAGES/lupa_biela.png" alt="לחפש" title="לחפש" width="30"></a> 
+                </li>
+                <li class="menu-button">
+                    <img src="../../IMAGES/menu_biele.png" alt="Menu Button" onclick="toggleSidebar()">
+                </li>
+              </ul>
+            </nav>
+          </header>
+          <div id="search-container">
+            <form onsubmit="submitSearchForm(event)">
+              <input type="text" id="search-input" placeholder="לחפש...">
+              <img src="../../IMAGES/lupa_cierna.png" alt="לחפש" onclick="submitSearchForm(event)">
+            </form>
+          </div>
+          <div class="sidebar">
+            <div class="sidebar-content">
+              <li class="menu-button">
+                <img src="../../IMAGES/menu_biele.png" alt="Menu Button" onclick="toggleSidebar()">
+            </li>
+            <a href="../ABOUT_PROJECT/about_project_he.html" class="sidebar-button">>על הפרויקט</a>
+            <a href="../RESERVATION/reservation_he.html" class="sidebar-button">מערכת הזמנות</a>
+            <a href="map_he.html" class="sidebar-button">מַפָּה</a>
+            <a href="../CONTACTS/contacts_he.html" class="sidebar-button">אנשי קשר</a>
+              <div id="socials_button" class="sidebar-social">
+                <a href="#"><img src="../../IMAGES/fb.png" alt="חשבון הפייסבוק של משולש" title="פייסבוק של משולש" width="30"></a> 
+                <a href="#"><img src="../../IMAGES/ig.png" alt="חשבון האינסטגרם של משולש" title="האינסטגרם של המשולש" width="30"></a> 
+                <a href="javascript:void(0);" onclick="toggleSearch_sidebar()"><img src="../../IMAGES/lupa_biela.png" alt="לחפש" title="לחפש" width="30"></a> 
+              </div>
+              <div id="search-container">
+                <form onsubmit="submitSearchForm(event)">
+                  <input type="text" id="search-input" placeholder="לחפש...">
+                  <img src="../../IMAGES/lupa_cierna.png" alt="לחפש" onclick="submitSearchForm(event)">
+                </form>
+              </div>
+            </div>
+          </div>
+    <div class="container2">
+      <div id="cookie-modal-container">
+        <div id="cookie-modal">
+          <button class="close-button" onclick="closeCookieModal()">X</button>
+          <h2>העדפות קובצי Cookie</h2>
+          <p>אנחנו והשותפים שלנו מאחסנים ונגישות לנתונים לא רגישים מהמכשיר שלך (כגון קובצי Cookie או מזהה מכשיר ייחודי).<br>
+          בנוסף, אנו מעבדים גם נתונים אישיים, כגון כתובות IP ומזהי קובצי Cookie, על מנת לעבד נתונים, למשל, כדי להציג פרסומות מותאמות אישית, למדוד את העדפות המבקרים שלנו וכו'.<br>
+          אתה יכול לשנות את העדפותיך בכל עת במדיניות הפרטיות שלנו באתר זה. אתה יכול לתת את הסכמתך לשימוש בעוגיות לכל מטרה על ידי לחיצה על "אני מסכים", אתה יכול לתת הסכמה לשימוש בעוגיות למטרות בודדות בהגדרות על ידי לחיצה על "הגדרות עוגיות". <br>
+          אם אינך מסכים לשימוש בעוגיות, לחץ על "אני לא מסכים".</p>
+          <br>
+          <br></p>
+          <button id="accept" class="accept" onclick="saveCookiePreferences(true)">אני מסכים</button>
+          <button id="decline" class="decline" onclick="saveCookiePreferences(false)">אני לא מסכים</button>
+        </div>
+      </div>
+        <div id="map_content">
+          <h2>איך למצוא אותנו:</h2>
+          <div id="map"></div>
+          <p>
+            אפשר להגיע למשולש ממרכז העיר במרחק של 20 דקות הליכה. אם אתם מעדיפים ללכת ברגל, אפשרות זו זמינה. במקביל, זמינים גם אמצעים חלופיים לגישה למשולש, כלומר:
+          </p>
+          <h3>תחבורה ציבורית:</h3>
+          <p>
+            קו 9 מהתחנה המרכזית לתחנת <b>Tomanova</b> (4 דקות הליכה למשולש)<br>
+            קו 67 מהתחנה <b>Jundrov/Avion Shopping Park</b> לתחנה <b>Schodova</b> (דקה הליכה למשולש)<br>
+            קו 25/26 מתחנת <b>Štefánikova čtvrť/Kamenný vrch/Osová</b> לתחנת <b>Schodova</b> (7 דקות הליכה למשולש), לוחות זמנים נוספים ניתן למצוא ב-<b>www.dpmb.cz</b>
+          </p>
+          <h3>במכונית:</h3>
+          <p>
+            אין אזור חניה ייעודי למבקרים בסביבה הקרובה למשולש.
+             עם זאת, אם יש זמינות באזור התושב, ניתן לחנות ללא עלות בין השעות 6:00-17:00. גם בימי חול וגם בסופי שבוע.
+             התשלום יכול להתבצע באמצעים שונים, כולל <b>הודעות SMS, מכשיר החניה ואפליקציית Parksimply</b>.
+             למי שמחפש מקום חניה בשפע, האפשרות הקרובה ביותר היא מתקן החניה הממוקם ב<b>Moravské náměstí</b>.
+             משם, אתה יכול לקחת את החשמלית <b>Česká</b> או <b>Moravské náměstí</b> לתחנת <b>Dětská nemocnice</b> ולאחר מכן להמשיך בהליכה קצרה של 5 דקות אל להגיע למשולש.
+          </p>
+          </div>
+          <div class="scroll-to-top" onclick="scrollToTop()">
+            &#8593;
+        </div>
+        <footer>
+            <div class="lang">
+                <a href="mapa.html"><img src="../../IMAGES/cz_flag.png" alt="Česky" title="Česky" width="40"></a>
+                <a href="map_de.html"><img src="../../IMAGES/gm_flag.png" alt="Deutsch" title="Deutsch" width="40"></a>
+                <a href="map_en.html"><img src="../../IMAGES/uk_flag.png" alt="English" title="English" width="40"></a>
+            </div>
+            <p>נוצר על ידי Jaroslav Gyesko. <span>&#169;</span> 2024 <span>&#124;</span> <a href="mailto:554226@muni.cz">איש קשר</a> <span>&#124;</span> <a href="../ACCESSIBILITY_STATEMENT/accesibility_he.html">הצהרת נגישות</a></p>
+            <p><button id="dark_button" onclick="darkSwitch()">החלף מצב כהה</button></p>
+        </footer>
+  </div>
+  </div>
+</body>
+</html>

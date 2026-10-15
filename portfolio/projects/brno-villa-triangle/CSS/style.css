@@ -1,0 +1,906 @@
+																								/* NASTAVENIA CELÉHO DOKUMENTU */
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Montserrat', sans-serif;
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
+	color: inherit;
+}
+
+body {
+	display: flex;
+	height: 100vh;
+	flex-direction: column;
+	background-color: rgb(255, 255, 255);
+}
+
+body > div {
+	font-size: 1.4rem;
+}
+  
+
+html {
+	min-height: 100%;
+}
+
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+  
+p {
+	line-height: 1.4;
+	font-size: 15px;
+}
+  
+ul li {
+	font-size: 15px;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	min-height: 100vh;
+	width: auto;
+}
+
+.container.active-sidebar {
+	height:100%;
+}
+
+																									/* NASTAVENIA HLAVIČKY */
+
+header,nav {
+	position: sticky;
+    top: 0;
+	height: 14vh; 
+	transition: height 0.5s; 
+	z-index: 1000;
+	border-bottom:#fff 5px solid;
+}
+
+header a {
+	text-decoration: none;
+}
+
+li.nav_buttons {
+	font-weight: bold;
+	transition: transform 0.5s;
+	position: relative;
+	height: 100%;
+	box-sizing: border-box;
+}
+  
+li.nav_buttons a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%; 
+	position: relative;
+	transform: skew(20deg); 
+	font-weight: 300;
+	font-size:1.2vw;
+}
+  
+li.nav_buttons:hover {
+	transform: skew(-20deg) scale(1.1); 
+	border-inline: 2px solid #fff;
+	border-top: none;
+	z-index: 3;
+}
+
+#logo_button {
+	border-left: none;
+	border-right: 14px solid #fff;
+}
+
+#logo {
+	padding-right:2vw;
+	text-align:initial;
+	justify-content: initial;
+}
+
+#logo p {
+	padding-right:2vw;
+	font-size:1.7vw;
+	font-weight: 400;
+	line-height:normal;
+}
+
+#logo img {
+	transition: transform 5s;
+	max-width: 100%; 
+	height: 100%;
+}
+  
+#logo:hover img {
+	transform: skew(0deg) rotate(720deg) scale(1.1); 
+	transform-origin: center; 
+	z-index: 2;
+}
+
+.menu-button {
+	display: none;
+}
+
+nav {
+	color: white;
+}
+  
+nav ul {
+	align-items: center;
+	display: flex;
+	height: 100%;
+	background: linear-gradient(to right, red, #fa854b);
+	overflow: hidden; 
+	padding-left: 3%;
+}
+  
+nav ul li {
+	text-align: center;
+	list-style: none;
+	flex: 1;
+	font-size: 25px;
+	transform: skew(-20deg);
+	z-index: 1;
+}
+  
+nav ul li:first-child {
+	flex: 0 0 40%; 
+}
+
+#socials_button {
+    height: 130px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+	padding-inline:1vw;
+}
+
+#socials_button a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-direction: row;
+    margin: 5px;
+}
+
+nav #socials_button a {
+	transform: skew(20deg);
+}
+
+nav #socials_button a:hover {
+	transform: skew(20deg) scale(1.2); 
+}
+
+.sidebar .menu-button {
+    align-self: flex-end; 
+}
+
+																							/* NASTAVENIA VYHĽADÁVACIEHO OKNA */
+
+#search-container {
+	position: absolute;
+	display: block;
+	overflow: hidden; 
+	max-height: 0; 
+	transition: max-height 1s ease-in-out !important; 
+	top: 15vh;
+	left: 0;
+	width: 100%;
+	background: white;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	z-index: 2;
+}
+
+#search-container form {
+    display: flex;
+    align-items: center;
+}
+
+#search-input {
+    width: calc(100% - 20px);
+    padding-block: 10px;
+    margin: 5px;
+    border: none;
+    outline: none;
+	flex: 1;
+}
+
+#search-container form img {
+    cursor: pointer;
+    padding-right: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+#search-container.active {
+    max-height: 200px; 
+}
+
+																								/* NASTAVENIA PÄTY */
+
+footer {
+	background: linear-gradient(to right, red, #fa854b);
+}
+
+footer p,a {
+	text-align: center;
+	color:white;
+}
+
+footer a{
+	text-decoration: underline;
+}
+
+.lang {
+	margin-top: 5px;
+	display:flex;
+	justify-content: center;
+}
+
+.lang a {
+	display: inline-flex;
+        align-items: center;
+        position: relative;
+        flex-direction: row;
+	justify-content: space-between;
+	margin: .3%;
+}
+
+address {
+	font-size:1.5rem;
+	margin-bottom: 20px;
+}
+
+																								/* NASTAVENIA BOČNÝ PANEL */
+
+.sidebar {
+    position: fixed;
+    height: 100vh;
+    right: -30%;
+    width: 0;
+    background: linear-gradient(to bottom, #fa854b, red);
+    transition: all 2s; 
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+  
+.sidebar-content {
+    width:100%;
+    height:100%;
+    font-size: 1rem;
+    color: black;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+  
+.sidebar-button {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+	color: white !important;
+	text-decoration: none;
+	border: 1px solid white;
+	border-radius: 5px;
+	width:90%;
+	height:15%;
+	justify-content: center;
+  	align-items: center;
+  	text-align: center;
+	box-shadow: inset 10px 0px 15px 0px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar #search-container {
+	margin-top: 10px; 
+	margin-bottom: 10px; 
+	width: 90%; 
+	overflow: hidden;
+	position: static;
+}
+  
+.sidebar #search-container form {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.sidebar #search-input {
+  width: calc(100% - 20px);
+  padding-block: 10px;
+  margin: 5px;
+  border: none;
+  outline: none;
+  flex: 1;
+}
+
+.sidebar #search-container form img {
+  cursor: pointer;
+  padding-right: 0px;
+  width: 20px;
+  height: 20px;
+}
+
+.sidebar-social {
+	margin-top: auto;
+}
+
+.sidebar-social a {
+	margin: 0 5px;
+}
+.sidebar-social a:hover {
+	transform: scale(1.2);
+}
+
+.sidebar.active {
+    right: 0;
+    width: 40%;
+    transition: all 1s;
+}
+
+.sidebar-button:hover {
+	transform: scale(1.05);
+}
+
+																							/* HLAVNÁ ČASŤ STRÁNKY - časť stránky, kde sa zobrazuje obsah */
+
+.container2 {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    transition: all 0.9s;
+	flex: 1;
+	height: auto;
+	position: relative;
+}
+
+.container2.active-sidebar {
+    max-width: 60%;
+    transition: all 1.3s;
+    transition-delay: 0.15s;
+}
+
+.container2::before, .container2::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    background: black; 
+    opacity: 0; 
+    z-index: 998;
+    pointer-events: none;
+}
+
+.container2.active-sidebar::before {
+    left: 0;
+    bottom: 0;
+    right: calc(100% - 60%); 
+	z-index: 1000;
+}
+
+.container2.active-sidebar::before , .container2.active-sidebar::after {
+    opacity: 0.5; 
+    pointer-events: auto; 
+	transition: 1s ease-in-out;
+}
+
+																							/* DOMOVSKÁ STRÁNKA - NASTAVENIE ZOBRAZENIA OBRÁZKOV VIL */
+
+.photo_villa {
+	border-radius: 10px;
+	object-fit: cover;
+	width: 100%;
+}
+
+.villas {
+	display: flex;
+    flex: 1;
+	height:67vh;
+    flex-direction: row;
+    border-radius: 10px;
+    width: 100%;
+    padding-top: 5px;
+	padding-bottom:10px;
+	box-sizing:border-box;
+}
+
+.villa_card {
+	margin-inline: 0.3vw;
+	display: flex;
+	width: 33%;
+	max-height: 100%;
+	box-sizing: border-box;
+	cursor: pointer;
+	background-position: center;
+	background-size: cover;
+	position: relative;
+	flex: 1;
+}
+
+.villa_card img {
+	transition: filter 0.5s ease-in-out, z-index 0.5s ease-in-out;
+}
+
+.villa_card:hover img{
+	filter: brightness(50%);
+	z-index: 1;
+}
+
+.villa_card:hover .overlay {
+	opacity: 1;
+	z-index: 2;
+}
+
+.villa_card .overlay {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	color: white;
+	opacity: 0;
+}
+
+.villa_card .overlay h3 {
+	margin: 0;
+	font-size: 1.3em; 
+}
+																							/* OSTATNÉ STRÁNKY - NASTAVENIE ZOBRAZENIA OBSAHU */
+
+																									/* LOGÁ NA STRÁNKE "O PROJEKTU" */
+.logos {
+	display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: auto;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.logos a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-direction: row;
+	transform: scale(0.75);
+}
+
+.logos img {
+	max-height: 10vh;
+	width: 100%;
+}
+																		/* JEDNOTNÉ NASTAVENIE ZOBRAZENIA TEXTU V STRÁNKACH "O PROJEKTU", "MAPA", "KONTAKTY", "PROHLASENI" */
+
+#text_project, #map_content,#contacts_text, #accesibility_text {
+	display:flex;
+	flex-direction: column;
+	padding-inline:10%;
+	flex:1;
+	justify-content: flex-start;
+	flex-grow: 1;
+	margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+#text_project h2, #contacts_text h2, #map_content h2 {
+	display:flex;
+	margin-bottom:1vh;
+	justify-content:center;
+}
+
+
+																										/* NASTAVENIA STRÁNKY "REZERVACE" */
+
+#res_button {
+	background: none;
+    color: black;
+    border: 1px solid black;
+    cursor: pointer;
+	height: 40px;
+    margin:0 35%; 
+    display: block; 
+	text-decoration: none;
+	display: flex; 
+	align-items: center; 
+	justify-content: center;
+	font-size: 1rem;
+}
+
+#res_txt {
+	font-size:2rem;
+}
+
+.container2.active-sidebar #res_button {
+	font-size:0.5rem;
+}
+
+.container2.active-sidebar #res_txt {
+	font-size:1.2rem;
+	transition:0.3s;
+}
+
+#res_button:hover {
+	color:white;
+	border: 1px solid white;
+	background:black;
+}
+
+																										/* NASTAVENIA STRÁNKY "MAPA" */
+
+#map {
+	height: 35vh;
+	width: 100%;
+	border: 0;
+	margin-bottom:1%;
+}
+
+#map_content p {
+	font-size:1rem;
+}
+
+.hours {
+	color:black !important;
+	max-height:150px;
+	overflow:auto;
+	border:none;
+}
+
+																										/* NASTAVENIA TMAVÉHO REŽIMU */
+
+.dark-mode {
+	background-image: none;
+	background-color: black;
+	color: white;
+}
+
+.dark-mode #dark_button, .dark-mode .sidebar-button, .dark-mode #res_button {
+    color: white !important;
+    background: black !important;
+    border: 1px solid white !important;
+	box-shadow: inset 10px 0px 15px 0px rgba(255, 255, 255, 0.2);
+}
+.dark-mode .scroll-to-top {
+	background: black; 
+	color: white !important;
+	border: 1px solid white !important;
+}
+
+.dark-mode .sidebar, .dark-mode footer {
+	background: black; 
+	color: white !important; 
+	box-shadow: 0 -3px 10px rgba(255, 255, 255, 0.5);
+}
+
+.dark-mode .sidebar {
+	border-left:2px #fff solid;
+}
+
+.dark-mode .sidebar-button:hover, .dark-mode #res_button:hover {
+	background-color: white !important; 
+	color: black!important; 
+}
+
+#dark_button{
+	background: none;
+	color:white;
+	border: 1px solid white;
+	cursor:pointer;
+}
+
+footer a:hover, #dark_button:hover{
+	color:white;
+	font-weight: bold;
+}
+
+nav.dark-mode-nav ul, nav.dark-mode-nav ul li.nav_buttons  {
+	background: black; 
+	color: #fff; 
+}
+
+																							/* NASTAVENIA ŠÍPKY NA PRESUN SPÄŤ NA VRCHOL STRÁNKY */
+
+.scroll-to-top {
+	position: fixed;
+	bottom: 80px; 
+	right: 20px; 
+	justify-content: flex-end;
+	align-items: flex-end;
+	cursor: pointer;
+	z-index: 999;
+	display: none; 
+	transition: opacity 0.3s ease;
+	border: 1px solid black;
+    border-radius: 10px;
+	background-color: white;
+}
+
+																									/* NASTAVENIA STRÁNKY "PROHLASENI" */
+
+#access_header {
+	display: flex;
+	justify-content: center;
+}
+
+#accesibility_text > *{
+	margin-bottom:10px;
+}
+
+																/* COOKIES OKNO, MOMENTÁLNE SA NEPOUŽÍVA, NAKOĽKO STRÁNKA POTREBUJE INTEGRÁCIU SO SERVEROM NA SPRACOVANIE COOKIES
+
+#accept {
+	background-color: #4CAF50;
+}
+
+.cookie-button {
+    position: fixed;
+    bottom: 14px;
+    right: 20px;
+    color: white;
+    padding: 10px 20px;
+    border: 2px #fff solid;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+#cookie-modal h2 {
+	margin-top: 0;
+}
+
+#cookie-modal p {
+	color: #333;
+	text-align: initial;
+}
+
+#cookie-modal button {
+	margin-top: 10px;
+	padding: 10px;
+	cursor: pointer;
+	border: none;
+	border-radius: 5px;
+	font-weight: bold;
+	width: 100%;
+	color:white;
+}
+
+
+#cookie-modal button.close-button {
+	cursor: pointer;
+	background-color: transparent;
+	border: none;
+	font-size: 20px;
+	color: #333;
+	position: absolute;
+	top: 0px;
+	right: 10px;
+	width: auto;
+	padding: 0;
+}
+
+#cookie-modal {
+	background-color: #fff;
+	padding: 20px;
+	border: 1px solid #ccc;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	max-width: 50vw;
+	max-height:50vh;
+	text-align: center;
+	position: relative;
+	z-index: 10000; 
+	overflow-y: auto;
+}*/
+
+#cookie-modal-container {
+	display: none;
+	/*position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5); 
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+	*/
+}
+
+/*
+#decline {
+	background-color: #FF0000;
+}*/
+
+
+																							/* NASTAVENIE RESPONZIVITY PRE RÔZNE DRUHY ZARIADENÍ */
+
+@media (max-width:620px) {
+	address {
+		font-size:1.3rem;
+		margin-bottom: 20px;
+	}
+	
+}
+
+@media (max-width:800px){
+	nav ul li{
+		font-size:3vw;
+	}
+}
+
+@media (max-width:860px) {
+	#res_txt{
+		margin-left:10vw;
+	}
+}
+
+@media (orientation:landscape) and (max-width:1000px) {
+
+	.sidebar.active #socials_button {
+		height:70px;
+	}
+	.sidebar #search-container form {
+		box-sizing: border-box;
+		height: 100%;
+		width: 100%;
+	  }
+}
+
+@media (orientation:landscape) and (max-width:1000px) {
+
+	.sidebar.active #socials_button {
+		height:70px;
+	}
+	.sidebar #search-container form {
+		box-sizing: border-box;
+		height: 100%;
+		width: 100%;
+	  }
+}
+
+@media (orientation: portrait) and (max-width: 1000px) {
+	.photo_villa {
+		border-radius: 10px;
+		max-width: 100%;
+	}
+	#text_project {
+		padding:0 30px;
+	}
+	.scroll-to-top {
+		right: 10px;
+	}
+	#map_content {
+		padding: 5px 30px;	
+	}
+	nav ul {
+		box-sizing: border-box;
+		padding-left:initial;
+	}
+	footer {
+		padding: 0 30px;
+	}
+}
+
+@media screen and (orientation:portrait) and (max-height:1200px) and (max-width: 1000px){
+	#logo:hover img {
+		transform: skew(0deg) rotate(720deg);
+	}
+	#logo p {
+		font-size:3.5vw;
+	}
+}
+
+@media (max-aspect-ratio: 1.5/1) or (max-width:1024px){
+	body {
+		height:auto;
+	}
+	header,
+    nav {
+        height: 18vh;
+        transition: height 0.5s;
+    }
+	#index_container {
+		min-height: initial;
+		height:100vh;
+	}
+	#index_container2 {
+		height: 80vh;
+	}
+	nav ul li:not(:first-child):not(:last-child),#socials_button {
+		display: none;
+	}
+	.sidebar .menu-button {
+		transition: none;
+	}
+	#logo {
+		align-self: flex-start;
+		padding-right:0;
+		}
+	#logo img {
+		height:80%
+	}
+	.sidebar.active #socials_button {
+		display: flex;
+	}	
+	.menu-button {
+		display: flex;
+		margin-right: 10px;
+		height: 18vh;
+		justify-content: flex-end;
+		align-items: center;
+		transform: skew(0deg);
+	}
+	.menu-button img {
+		max-width: 100%;
+		height: 30%;
+		cursor: pointer;
+	}
+	li.nav_buttons {
+		flex: 0 0 auto;
+	}
+	.villas {
+		flex-direction: column;
+		max-height: 73.5vh;
+		padding-top:0px;
+		padding-bottom:5px;
+	}
+	.villa_card {
+		width:auto;
+		margin-bottom:5px;
+		margin-inline:0;
+		flex:1;
+		height: 20vh;
+		max-height: 33.33%;
+	}
+	.photo_villa{
+		border-radius:0;
+	}
+	#logo_button {
+		border:none;
+	}
+	#logo:hover img {
+		transform: none; 
+	}
+	li.nav_buttons a{
+		justify-content: initial;
+	}
+	#access_header {
+		text-align: left;
+	}
+	.lang a {
+		margin: .5%;
+	}
+}
+
+@media (orientation:portrait) and (max-width:1024px) {
+	#logo p{
+		font-size:3vw;
+	}
+	#logo img {
+		height:80%;
+	}
+}
+  
+@media (orientation:landscape) and (max-aspect-ratio: 1.5/1) {
+	#logo p{
+		font-size:2.5vw;
+	}
+}
+  
+@media (orientation:landscape) and (max-width:1300px) {
+	.logos {
+		margin-top:2%;
+	}
+}
