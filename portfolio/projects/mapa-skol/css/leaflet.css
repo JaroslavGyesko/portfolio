@@ -793,8 +793,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
 						  margin-right: 30px;
 						}
 						.openbtn img {
-						  width: 25px;
+						  width: 15px;
 						  height: auto;
+						  
 						}
 						@media screen and (max-width: 1650px) {
 

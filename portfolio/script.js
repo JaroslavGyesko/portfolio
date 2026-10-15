@@ -11,7 +11,7 @@ const details = {
     kicker: '02 / WEB & CULTURE', title: 'Tri brnianske vily. Jeden digitálny zážitok.',
     text: 'Koncept webu pomáha návštevníkovi objaviť architektúru a kultúrne dedičstvo Brna. Návrh kombinuje výber vily, mapu, rezervácie, kontakty a informácie o projekte v štyroch jazykových mutáciách.',
     note: 'Moja úloha: informačná architektúra, návrh a realizácia responzívneho webu, obsahové sekcie, jazykové mutácie a prvky prístupnosti.',
-    action: '<a class="button dialog-button" href="projects/brno-villa-triangle/HTML/HOMEPAGE/index.html" target="_blank">Otvoriť reálny web <span>↗</span></a>'
+    action: '<a class="button dialog-button" href="projects/brno-villa-triangle/HTML/HOMEPAGE/index.html" target="_blank">Otvoriť web <span>↗</span></a>'
   }
 };
 document.querySelectorAll('[data-project]').forEach(button => button.addEventListener('click', () => {
